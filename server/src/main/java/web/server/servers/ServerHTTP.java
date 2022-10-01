@@ -1,4 +1,7 @@
-package web.server;
+package web.server.servers;
+
+import web.server.handlers.HandlerRequestHTTP;
+import web.server.socket.SocketServiceImp;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -10,9 +13,9 @@ public class ServerHTTP implements Servers{
     private static int PORT;
 
 
-    ServerHTTP(){
-        WWW = "C:\\Users\\Andrey\\IdeaProjects\\web-server\\www\\index.html";
-        PORT = 8080;
+    public ServerHTTP(){
+        WWW = "/www";
+        PORT = 8088;
     }
 
     @Override
@@ -23,8 +26,7 @@ public class ServerHTTP implements Servers{
             while (true) {
                 Socket socket = serverSocket.accept();
                 System.out.println("New client connected!");
-                HandlerRequest handler = new HandlerRequestHTTP(socket, WWW);
-                new Thread(handler).start();
+                new Thread(new HandlerRequestHTTP(new SocketServiceImp(WWW , socket))).start();
             }
         } catch (IOException e) {
             e.printStackTrace();
