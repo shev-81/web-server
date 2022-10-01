@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Реализация сервера HTTP.
+ */
 public class ServerHTTP implements Servers{
 
     private static String WWW;

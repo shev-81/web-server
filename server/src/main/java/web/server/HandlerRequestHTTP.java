@@ -10,10 +10,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Слушатель HTTP.
+ */
 public class HandlerRequestHTTP implements HandlerRequest, Runnable{
 
-    private Socket socket;
-    private String WWW;
+    private final Socket socket;
+    private final String WWW;
 
 
     public HandlerRequestHTTP(Socket socket, String WWW) throws IOException {
@@ -26,6 +29,9 @@ public class HandlerRequestHTTP implements HandlerRequest, Runnable{
         handle();
     }
 
+    /**
+     * Реализация действий слушателя ее решил не декомпозировать, так как по сути это, одна задача отдать ответ.
+     */
     @Override
     public void handle() {
         try (BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
