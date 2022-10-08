@@ -6,7 +6,6 @@ import web.server.socket.ServiceSocket;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 public class HandlerRequestHTTP implements HandlerRequest, Runnable {
 
@@ -21,10 +20,10 @@ public class HandlerRequestHTTP implements HandlerRequest, Runnable {
         try {
             Path path = socketService.readRequest();
             if (!Files.exists(path)) {
-                socketService.sendResponse(new HttpResponse(List.of("HTTP/1.1 404 NOT_FOUND", "Content-Type: text/html; charset=utf-8", "\n"), "<h1>Файл не найден!</h1>"));
+                socketService.sendResponse(HttpResponse.buildWithCode(200));
                 return;
             }
-            socketService.sendResponse(new HttpResponse(List.of("HTTP/1.1 200 OK", "Content-Type: text/html; charset=utf-8", "\n"), ""));
+            socketService.sendResponse(HttpResponse.buildWithCode(404));
             Files.newBufferedReader(path).transferTo(socketService.getOutput());
             socketService.halt();
             System.out.println("Client disconnected!");
